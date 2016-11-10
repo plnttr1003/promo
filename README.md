@@ -1,1 +1,1 @@
-# sov_ist
+# Promo (s_ist)
