@@ -4,12 +4,6 @@ var __appdir = path.dirname(require.main.filename);
 
 var promo = require('../models/main.js').Promo;
 
-
-// ------------------------
-// *** promo Block ***
-// ------------------------
-
-
 exports.index = function(req, res) {
   Promo.where('title.lg').equals(req.locale).where('status').ne('hidden').limit(12).sort('-date').exec(function(err, promo) {
     res.render('promo', {promo: promo});
@@ -23,7 +17,6 @@ exports.promo = function(req, res) {
     res.render('promo/promo.jade', {promo: promo});
   });
 }
-
 
 exports.get_promo = function(req, res) {
   var post = req.body;

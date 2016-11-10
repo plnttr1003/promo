@@ -1,20 +1,15 @@
 var User = require('../models/main.js').User;
 
-
 // ------------------------
 // *** Auth Block ***
 // ------------------------
-
-
 exports.main = function(req, res) {
   res.render('auth');
 }
 
-
 // ------------------------
 // *** Login Block ***
 // ------------------------
-
 
 exports.login = function(req, res) {
   res.render('login');
@@ -39,11 +34,9 @@ exports.login_form = function(req, res) {
   });
 }
 
-
 // ------------------------
 // *** Logout Block ***
 // ------------------------
-
 
 exports.logout = function(req, res) {
   req.session.destroy();
@@ -51,11 +44,9 @@ exports.logout = function(req, res) {
   res.redirect('/login');
 }
 
-
 // ------------------------
 // *** Registr Block ***
 // ------------------------
-
 
 exports.registr = function(req, res) {
   if (!req.session.user_id)
@@ -74,7 +65,6 @@ exports.registr_form = function(req, res) {
   });
 
   user.save(function(err, user) {
-    // if(err) {throw err;}
     if (err) return res.redirect('back');
     console.log('New User created');
     req.session.user_id = user._id;

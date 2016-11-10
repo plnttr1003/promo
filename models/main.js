@@ -62,11 +62,9 @@ var promoSchema = new Schema({
 
 });
 
-
 // ------------------------
 // *** Plugins Block ***
 // ------------------------
-
 
 userSchema.plugin(mongooseBcrypt, { fields: ['password'] });
 promoSchema.plugin(mongooseLocale);
@@ -74,7 +72,6 @@ promoSchema.plugin(mongooseLocale);
 // ------------------------
 // *** Exports Block ***
 // ------------------------
-
 
 module.exports.User = mongoose.model('User', userSchema);
 module.exports.Promo = mongoose.model('Promo', promoSchema);
