@@ -6,7 +6,7 @@ var async = require('async');
 var gm = require('gm').subClass({ imageMagick: true });
 var del = require('del');
 
-var promo = require('../../models/main.js').promo;
+var Promo = require('../../models/main.js').Promo;
 
 var __appdir = path.dirname(require.main.filename);
 
@@ -37,7 +37,7 @@ var checkNested = function (obj, layers) {
 
 
 exports.list = function(req, res) {
-	promo.find().sort('-date').exec(function(err, promo) {
+	Promo.find().sort('-date').exec(function(err, promo) {
 		res.render('auth/promo/', {promo: promo});
 	});
 }
@@ -170,7 +170,7 @@ exports.edit = function(req, res) {
   var preview_path = '/images/preview/';
   var images_preview = [];
 
-	promo.findById(id).exec(function(err, promo) {
+	Promo.findById(id).exec(function(err, promo) {
 		async.forEach(promo.images, function(image, callback) {
 			var image_path = __appdir + '/public' + image.original;
 			var image_name = image.original.split('/')[5];
@@ -311,7 +311,7 @@ exports.edit_form = function(req, res) {
 
 exports.remove = function(req, res) {
 	var id = req.body.id;
-	promo.findByIdAndRemove(id, function() {
+	Promo.findByIdAndRemove(id, function() {
 		del.sync(__appdir + '/public/images/promo/' + id);
 		res.send('ok');
 	});
