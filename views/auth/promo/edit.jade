@@ -1,0 +1,90 @@
+extends ../../layout
+include ../forms.jade
+
+block title
+	title РЕДАКТИРОВАТЬ ПРОМО
+
+block content_style
+	link(rel='stylesheet', type='text/css', href='/build/libs/css/font-awesome.css')
+	link(rel='stylesheet', type='text/css', href='/build/libs/css/wysiwyg-editor.css')
+	link(rel='stylesheet', type='text/css', href='/build/css/add.css')
+
+block content_scripts
+	script(type='text/javascript', src='/build/libs/js/wysiwyg.js')
+	script(type='text/javascript', src='/build/libs/js/wysiwyg-editor.js')
+	script(type='text/javascript', src='/build/libs/js/jquery-ui-1.10.4.custom.min.js')
+	script(type='text/javascript', src='/build/libs/js/jquery.filedrop.js')
+	script(type='text/javascript', src='/build/js/upload.js')
+	script(type='text/javascript', src='/build/js/add.js')
+
+block content
+	.form_block
+		a.back_link(href='/auth/promo') < Назад
+		button.toggle_eng(type='button') перевод
+		.title РЕДАКТИРОВАТЬ ПРОМО
+		form(action="", method="post")
+			.additional_block
+				.additional_titlе Параметры
+					.form_title Статус:
+					select(name='header_font_family')
+						option(value='') --
+						option(value='opensans', selected=promo.status == 'opensans') Open Sans
+						option(value='slider', selected=promo.status == 'slider') слайдер
+						option(value='map', selected=promo.status == 'map') карта
+						option(value='description', selected=promo.status == 'description') описание
+						option(value='schedule', selected=promo.status == 'schedule') расписание
+						option(value='trailer', selected=promo.status == 'schedule') трейлер
+						option(value='html', selected=promo.status == 'html') html
+						option(value='hidden', selected=promo.status == 'hidden') скрытый
+
+
+
+
+			.form_title Заголовок:
+			+form_text_single('title', promo)
+			.form_title Подзаголовок:
+			+form_text_single('subtitle', promo)
+			.form_title Кнопка:
+			input(type='checkbox', name='buy_button', value='true', checked=promo.buy_button)
+			.form_title Описание:
+			+form_text_multi('description', promo)
+			.form_title Статус:
+			select(name='status')
+				option(value='') обычный
+				option(value='title', selected=promo.status == 'title') главный слайд
+				option(value='slider', selected=promo.status == 'slider') слайдер
+				option(value='map', selected=promo.status == 'map') карта
+				option(value='description', selected=promo.status == 'description') описание
+				option(value='schedule', selected=promo.status == 'schedule') расписание
+				option(value='trailer', selected=promo.status == 'schedule') трейлер
+				option(value='html', selected=promo.status == 'html') html
+				option(value='hidden', selected=promo.status == 'hidden') скрытый
+
+
+			.form_title Позиция:
+			input(name='position', type='number', value=promo.position)
+			.form_title Дата публикации:
+			+form_calendar('date', promo.date)
+			.form_title Видео:
+			+form_multiple_input('videos', promo.videos)
+			.form_title Изображения:
+			+form_images_upload(promo.images)
+			br
+			hr
+			.code_block
+				.form_title CSS-Стиль:
+				textarea(name='code')= promo.code
+			br
+			br
+			.additional_block
+				.form_title ID Сеанса:
+				input(name='movie', type='number', value=promo.movie)
+				.form_title Widget ID:
+				input(name='widget_key', value=promo.widget_key)
+				br
+				hr
+				.form_title Только IMAX:
+				input(type='checkbox', name='imax', value='false', checked=promo.imax)
+				.form_title Отображать карту:
+				input(type='checkbox', name='map', value='true', checked=promo.map)
+			input(type='submit', value='отправить')

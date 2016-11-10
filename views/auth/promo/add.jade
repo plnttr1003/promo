@@ -1,0 +1,76 @@
+extends ../../layout
+include ../forms.jade
+
+block title
+	title ДОБАВИТЬ ПРОМО
+
+block content_style
+	link(rel='stylesheet', type='text/css', href='/build/libs/css/font-awesome.css')
+	link(rel='stylesheet', type='text/css', href='/build/libs/css/wysiwyg-editor.css')
+	link(rel='stylesheet', type='text/css', href='/build/css/add.css')
+
+block content_scripts
+	script(type='text/javascript', src='/build/libs/js/wysiwyg.js')
+	script(type='text/javascript', src='/build/libs/js/wysiwyg-editor.js')
+	script(type='text/javascript', src='/build/libs/js/jquery-ui-1.10.4.custom.min.js')
+	script(type='text/javascript', src='/build/libs/js/jquery.filedrop.js')
+	script(type='text/javascript', src='/build/js/upload.js')
+	script(type='text/javascript', src='/build/js/add.js')
+
+block content
+	.form_block
+		a.back_link(href='/auth/promo') < Назад
+		button.toggle_eng(type='button') перевод
+		.title ДОБАВИТЬ ПРОМО
+		form(action="/auth/promo/add", method="post")
+			.form_title Заголовок:
+			+form_text_single('title')
+			.form_title Подзаголовок:
+			+form_text_single('subtitle')
+			.form_title Кнопка:
+			input(type='checkbox', name='buy_button', value='true')
+			.form_title Описание:
+			+form_text_multi('description')
+			.form_title Статус:
+			select(name='status')
+				option(value='') обычный
+				option(value='title') главный слайд
+				option(value='slider') слайдер
+				option(value='map') карта
+				option(value='description') описание
+				option(value='schedule') расписание
+				option(value='trailer') трейлер
+				option(value='html') html
+				option(value='hidden') скрытый
+
+			.form_title Позиция:
+			input(name='position', type='number')
+			.form_title Дата публикации:
+			+form_calendar('date')
+			.form_title Видео:
+			+form_multiple_input('videos')
+			.form_title Изображения:
+			.form_images_upload
+				.form_desc_title Перетащи сюда
+			br
+			hr
+			.code_block
+				.form_title CSS-Стиль:
+				textarea(type='text', name='code')
+			br
+			br
+			.additional_block
+				.form_title ID Сеанса:
+				input(name='movie', type='number')
+				.form_title Widget ID:
+				input(name='widget_key')
+				br
+				hr
+				.form_title Только IMAX:
+				input(type='checkbox', name='imax', value='false')
+				.form_title Отображать карту:
+				input(type='checkbox', name='map', value='true')
+
+			input(type='submit', value='отправить')
+
+

@@ -1,0 +1,17 @@
+extends ../layout
+
+block title
+	title= __('Промостраницы')
+
+block content_style
+
+block content_scripts
+
+block content
+	.content_title= __('Промостраницы')
+	.content_block
+		each item in promo
+			.content_item
+				a.item_link(href='/promo/' + item._id)
+					span.item_title= item.i18n.title.get(locale)
+						span.item_date= ' / ' + item.date.getDate() + ' ' + months[item.date.getMonth()] + ' ' + item.date.getFullYear()

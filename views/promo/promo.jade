@@ -1,0 +1,66 @@
+extends ../layout
+
+block title
+	title= promo.i18n.title.get(locale).toUpperCase()
+	meta(name='description', content=promo.i18n.description.get(locale).replace(/<[^>]+>/g,' '))
+	meta(property='og:description', content=promo.i18n.description.get(locale).replace(/<[^>]+>/g,' '))
+	each image in promo.images
+		meta(property='og:image', content=image.thumb)
+
+block content_style
+	link(rel='stylesheet', type='text/css', href='https://kassa.rambler.ru/s/1606021958/dist/css/main.css?v=1606021958' + version)
+	link(rel='stylesheet', type='text/css', href='/build/css/grid.css' + version)
+	link(rel='stylesheet', type='text/css', href='/build/css/schedule.css' + version)
+	link(rel='stylesheet', type='text/css', href='/build/css/promo.css' + version)
+	link(rel='stylesheet', type='text/css', href='/build/libs/css/slick.css' + version)
+	style= promo.code
+
+block content_scripts
+	if (promo.movie && promo.widget_key)
+		script(type='text/javascript')= 'var movie = { movie_id:' + promo.movie + ', widget_key: \'' + promo.widget_key + '\'}'
+		script(type='text/javascript', src='/build/libs/js/TicketManager.js' + version)
+		script(type='text/javascript', src='/build/js/data/cinemas.js' + version)
+		script(type='text/javascript', src='/build/js/schedule.js' + version)
+	script(type='text/javascript', src='/build/js/promo.js' + version)
+	script(type='text/javascript', src='https://maps.googleapis.com/maps/api/js')
+
+block content
+
+	.header_top
+		include ../kassaheader
+	.container.header(style='background-image:url('+promo.images[0].original+')')
+		.title= promo.i18n.title.get(locale)
+		.subtitle= promo.i18n.subtitle.get(locale)
+		.buy_button
+			a.buy(href='#schedule_link') Купить билет
+	.cast_slider
+		- var val = 0
+		each image in promo.images
+			if (val != 0)
+				.slide.cast.content_scroll_item(style='background-image:url('+image.thumb+')')
+			-val ++
+	.container.intro
+		.intro_inner: != promo.i18n.description.get(locale)
+
+	.container.trailer_title.title_font Трейлер
+	.container.trailer_block
+
+	.container.map_title
+	.container.map#map_canvas
+	if (promo.movie && promo.widget_key)
+		#schedule_link
+		.container.schedule
+			.sh_block
+
+
+
+	.container.slider_title.title_font Кадры из фильма
+	.container.slider-film
+		- var val = 0
+		each image in promo.images
+			if (val != 0)
+				.slide.content_scroll_item(style='background-image:url('+image.thumb+')')
+			-val ++
+	.footer
+		include ../kassafooter
+

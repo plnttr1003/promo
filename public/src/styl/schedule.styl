@@ -1,0 +1,155 @@
+#schedule
+	position: relative
+
+.sh_block
+	min-height 200px
+	width 1030px
+	margin 0 auto
+	font-family 'Lato', sans-serif
+
+h2.mb_title
+	font-size 24px
+	font-weight normal
+	width 43%
+	position: absolute
+	top -94px
+	left 0px
+
+.rasp_h
+	position absolute
+	left 44%
+	top -99px
+
+.btn_rasp_static
+	display inline-block
+	font-size 15px
+	font-family helvetica, arial
+	color #003CFF
+	border 1px solid
+	border-radius 18px
+	margin 0 2px 4px
+	height 34.2px
+	width 77px
+	line-height 36px
+	text-align center
+	font-weight bold
+	cursor pointer
+	&:hover
+		background #003CFF
+		color #fff
+		border-color #003CFF
+
+.rasp_title
+	font-size 22px
+	font-weight normal
+	color #000
+	line-height 22px
+	@media screen and (min-width: 767px)
+		position relative
+		top -140px
+	a
+		color #000
+		text-decoration none
+	.s-name
+		@media screen and (min-width: 767px)
+			top 140px
+			display block
+			position relative
+
+.rasp_place
+	color #28292C
+	font-size 13px
+	line-height 13px
+	font-family 'Lato', sans-serif
+
+.rasp_items
+	border none
+	padding-top 25px
+
+.rasp_type:first-child
+	padding-top 0
+
+.rasp_item
+	border none
+	background none
+	&:hover
+		background none
+		.rasp_place
+			color:#28292C!important;
+	&.visible_cinema
+		display block
+
+.date_item
+	background transparent
+	margin-right 2px
+	&:hover
+		background transparent
+		margin-right 2px
+	&:nth-child(-n+5)
+		display inline-block
+		float none
+		text-align: center
+	&.active
+		.rasp_place
+			color:#28292C!important;
+		.date_link
+			color #fff
+			background transparent
+			border none
+			time.date_item__time
+				color #fff
+				background #003CFF
+				border-color #003CFF
+
+.date_link
+	background none
+	height auto
+	width auto
+	padding 0
+	border none
+	text-decoration none
+	&:hover
+		background transparent
+	&:before
+		display none
+
+	time.date_item__time
+		color #003CFF
+		font-size 14px
+		font-weight 600
+		padding 0 20px
+		border-radius 18px
+		border 1px solid transparent
+		display inline-block
+		height 34px
+		line-height 34px
+		&:hover
+			background transparent
+			color #003CFF
+			border-color #003CFF
+
+	.date_item__day
+		text-align center
+		color #7A7F90
+		font-size 10px
+
+.rasp_h
+	border none
+	margin 0
+	overflow initial
+
+.rasp_hover
+	opacity: 0.5;
+
+.rasp_item_in
+	padding-left 0
+	padding-right 0
+	@media screen and (min-width: 767px)
+		position relative
+
+.date_calendar
+	display none!important
+
+.date_list.cf
+	text-align right
+	white-space nowrap

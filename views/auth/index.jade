@@ -1,0 +1,23 @@
+extends ../layout
+
+block title
+	title ПРОМО
+
+block content_style
+	link(rel='stylesheet', type='text/css', href='/build/css/add.css')
+
+block content
+	a.back_link(href='/logout') Выход
+	!= ' | ' + session.login
+	.title.star ПРОМО
+	.main_menu_block
+		br
+		b Промо:
+		a(href='/auth/promo')= ' редактировать'
+		br
+		br
+
+		b Пользователи:
+		a(href='/auth/users')= ' редактировать'
+		br
+		br
