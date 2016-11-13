@@ -4,92 +4,10 @@ html, body {
 	background: #0c0c0c;
 	font-family: helvetica;
 	font-weight: 100;
-	height: 100%;
+	/*height: 100%;*/
 }
 body > .container {
 	height: 100%;
-}
-.side {
-	position: fixed;
-	width: 14%;
-	height: 100%;
-	/*background: #f9f0cc;*/
-	background: #fffcf0
-}
-.side_inner {
-	padding: 10px;
-}
-
-.side_menu_checkbox {
-	margin: 0 3px 0 0;
-	width: 17px;
-	height: 17px;
-	display: inline-block;
-	position: relative;
-}
-.side_menu_checkbox ~ label {
-	color: #000000;
-	cursor: pointer;
-	font-size: 30px;
-	line-height: 23px;
-}
-.side_menu_checkbox~ label .items_hide  {
-	display: none;
-}
-.side_menu_checkbox ~ .side_menu {
-	display: none;
-}
-.side_menu_checkbox ~ label:hover {
-	color: #ff781a;
-}
-.side_menu_checkbox:not(checked) {
-	position: absolute;
-	opacity: 0;
-}
-.side_menu_checkbox:not(checked) + label {
-	position: relative;
-	padding: 0;
-}
-.side_menu_checkbox:checked ~ .side_menu {
-	display: block;
-	margin-bottom: 20px;
-}
-.side_menu_checkbox:checked ~ label .items_hide {
-	display: block;
-}
-.side_menu_checkbox:checked ~ label .items_show {
-	display: none;
-}
-
-.side_menu:hover {
-	height: auto;
-}
-.side_item {
-	padding: 10px 8px;
-	border-bottom: 1px solid #e4ddbf;
-	line-height: 16px;
-	font-size: 13px;
-}
-.side_item:hover {
-	background: #fff;
-	cursor: pointer;
-}
-.side_menu .side_item {
-	background: #fff;
-}
-.side_menu .side_item:hover:after {
-	content:'+';
-	display:inline-block;
-	float:right;
-	border:1px solid;
-	border-radius:50%;
-	padding:2px;
-	line-height: 13px;
-	width: 16px;
-	text-align: center;
-	font-size: 21px;
-	height: 16px;
-	margin-top: 2px;
 }
 /* ------- */
 
@@ -106,15 +24,22 @@ body > .container {
 	justify-content: center;
 	align-items: center;
 }
+.content-block:hover {
+	z-index:1;
+}
+.content-block-inner {
+	min-width: 400px;
+	max-width: 1000px;
+}
 .content-block-inner.title {
 	text-align: center;
 	font-size: 40px;
-	width: 1000px;
-	min-height: 40px;
+}
+.content-block-inner.subtitle {
+	text-align: center;
+	font-size: 24px;
 }
 .content-block-inner.description {
 	text-align: left;
-	min-width: 400px;
-	max-width: 1000px;
-	min-height: 100px;
+	font-size: 16px;
 }

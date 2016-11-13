@@ -12,19 +12,18 @@ function showEditor(dc, parentPlock, block, timestamp) {
 		menuItem = dc.querySelectorAll('[data-id=_' + timestamp + ']')[0],
 		resizebleClass = '_resizeble';
 
-	fontColor.className = 'font-color _editor-button';
+	fontColor.className = 'font-color _editor-button _' + timestamp;
 	fontFamilies.className = 'font-family _editor-button';
 	fontSize.className = 'font-size _editor-button';
 	textAlign.className = 'text-align _editor-button';
-	resizeButton.className = 'text-align _editor-button';
-	resizeButton.innerHTML = '<span>121</span>'
+	resizeButton.className = 'resize _right_editor-button';
+	resizeButton.innerHTML = '<span>Растянуть</span>'
 
 	editorButtonInner.className = 'editor-button-inner';
 
 	fontSize.appendChild(editorButtonInner);
 	fontColor.setAttribute('type','color');
 	fontSizes.forEach(function(item,i){
-		console.log(item);
 		var fontMenuItem = dc.createElement('div');
 		fontMenuItem.className = 'editor _font-size';
 		fontMenuItem.setAttribute('data-font-size', item);
@@ -34,21 +33,25 @@ function showEditor(dc, parentPlock, block, timestamp) {
 			block.style.fontSize = item;
 		}, false)
 	})
-	resizeButton.addEventListener('click', function(){allowResizeElement(parentPlock, resizebleClass)});
+	resizeButton.addEventListener('click', function(){
+		allowResizeElement(parentPlock, resizebleClass)
+	});
 
 	containerEditior.appendChild(fontColor);
 	containerEditior.appendChild(fontFamilies);
 	containerEditior.appendChild(fontSize);
 	containerEditior.appendChild(textAlign);
-	containerEditior.appendChild(resizeButton);
 	containerEditior.className = 'container-editor';
 
 	parentPlock.appendChild(containerEditior);
-
+	parentPlock.appendChild(resizeButton);
 	//--
 
 	fontColor.addEventListener('input', function() {
+		console.log('=====================');
+		console.log(fontColor.value);
 		console.log(block);
+		console.log('---------------------');
 		block.style.color = fontColor.value;
 	}, false);
 }

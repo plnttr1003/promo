@@ -1,9 +1,96 @@
+
+.content-block {
+	position: relative;
+}
 .content-block._resizeble {
 	resize: vertical;
 	overflow: auto;
 	outline: 1px dashed #b7b7b7;
 	outline-offset: -1px;
 	height: auto;
+}
+
+.side {
+	position: fixed;
+	width: 14%;
+	height: 100%;
+	background: #fffcf0;
+	z-index: 2;
+}
+.side_inner {
+	padding: 10px;
+}
+
+.side_menu_checkbox {
+	margin: 0 3px 0 0;
+	width: 17px;
+	height: 17px;
+	display: inline-block;
+	position: relative;
+}
+.side_menu_checkbox ~ label {
+	color: #000000;
+	cursor: pointer;
+	font-size: 30px;
+	line-height: 23px;
+}
+.side_menu_checkbox~ label .items_hide  {
+	display: none;
+}
+.side_menu_checkbox ~ .side_menu {
+	display: none;
+}
+.side_menu_checkbox ~ label:hover {
+	color: #ff781a;
+}
+.side_menu_checkbox:not(checked) {
+	position: absolute;
+	opacity: 0;
+}
+.side_menu_checkbox:not(checked) + label {
+	position: relative;
+	padding: 0;
+}
+.side_menu_checkbox:checked ~ .side_menu {
+	display: block;
+	margin-bottom: 20px;
+}
+.side_menu_checkbox:checked ~ label .items_hide {
+	display: block;
+}
+.side_menu_checkbox:checked ~ label .items_show {
+	display: none;
+}
+
+.side_menu:hover {
+	height: auto;
+}
+.side_item {
+	padding: 10px 8px;
+	border-bottom: 1px solid #e4ddbf;
+	line-height: 16px;
+	font-size: 13px;
+}
+.side_item:hover {
+	background: #fff;
+	cursor: pointer;
+}
+.side_menu .side_item {
+	background: #fff;
+}
+.side_menu .side_item:hover:after {
+	content:'+';
+	display:inline-block;
+	float:right;
+	border:1px solid;
+	border-radius:50%;
+	padding:2px;
+	line-height: 13px;
+	width: 16px;
+	text-align: center;
+	font-size: 21px;
+	height: 16px;
+	margin-top: 2px;
 }
 
 input[type=color]::-webkit-color-swatch-wrapper {
@@ -33,6 +120,40 @@ input[type=color]::-webkit-color-swatch {
 	border: none;
 	position: relative;
 }
+a.resize._right_editor-button {
+    position: absolute;
+    font-size: 131px;
+    top: 0;
+    right: 20px;
+    bottom: 0;
+    width: 170px;
+    overflow: hidden;
+    opacity: 0;
+}
+a.resize._right_editor-button:hover, 
+.content-block._resizeble .resize._right_editor-button {
+    opacity:1;
+}
+a.resize._right_editor-button:hover:after {
+	content: '';
+	display: block;
+	position: absolute;
+	bottom: 0%;
+	width: 100%;
+	height: 1px;
+	background: rgba(204, 204, 204, 0.58);
+}
+a.resize._right_editor-button span {
+    transform-origin: 0;
+    transform: rotate3d(0,0,1, 90deg) translate3d(-70px,-83px,0);
+    display: block;
+    letter-spacing: 3px;
+    font-weight: bold;
+    text-transform: uppercase;
+    width: 100vmin;
+    color: rgba(0, 0, 0, 0.25);
+    font-weight: 800;
+}
 input[type=color]._editor-button {
 	background: transparent;
 }
@@ -58,7 +179,6 @@ input[type=color]._editor-button {
 .editor-button-inner {
 	background: #fff;
 }
-
 
 
 .side_elements {

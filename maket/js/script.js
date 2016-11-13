@@ -63,11 +63,16 @@ function addElement(item, i) {
 			break;
 		case 'description':
 			console.log('description');
-			blockData = {container : 'div', type : 'richText', multiple : false, content : 'Описание'};
+			blockData = {
+				container : 'div',
+				type : 'richText',
+				multiple : false,
+				content : 'Здесь должно быть описание. Описание может быть любой длины. Короткое или длинное. Здесь должно быть описание. Описание может быть любой длины. Короткое или длинное.'
+			};
 			break;
 		case 'map':
 			console.log('map');
-			blockData = {container : 'div', type : 'sheduleMap', multiple : false, content : 'Описание'}
+			blockData = {container : 'div', type : 'sheduleMap', multiple : false, content : 'Карта'}
 			break;
 		case 'bottom-slider':
 			console.log('bottom-slider');
@@ -117,7 +122,6 @@ function sortableMenu(dc, rootEl, contentBlock){
 				rootEl.removeEventListener('dragend', _onDragEnd, false);
 				console.log(rootEl);
 				[].slice.call(rootEl.children).forEach(function(item,i){
-					console.log('------=----==-=-------');
 					if (item.dataset && item.dataset.id) {
 						dc.getElementById(item.dataset.id).style.order = i;
 					};
