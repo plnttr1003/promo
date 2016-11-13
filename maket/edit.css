@@ -1,3 +1,11 @@
+.content-block._resizeble {
+	resize: vertical;
+	overflow: auto;
+	outline: 1px dashed #b7b7b7;
+	outline-offset: -1px;
+	height: auto;
+}
+
 input[type=color]::-webkit-color-swatch-wrapper {
 	padding: 0;
 }

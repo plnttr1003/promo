@@ -8,6 +8,7 @@ function init() {
 function createBlock(className, item, params) {
 	var
 		container = dc.querySelectorAll('.container')[0],
+		contentBlockLength = dc.querySelectorAll('.content-block').length,
 		contentBlock = dc.createElement('div'),
 		contentBlockInner = dc.createElement((params && params.container) ? params.container : 'div'),
 		sideElements = dc.querySelectorAll('.side_elements')[0],
@@ -21,6 +22,8 @@ function createBlock(className, item, params) {
 
 	contentBlock.className = 'content-block ' + className + '_block';
 	contentBlock.setAttribute('id', '_' + timestamp);
+	//contentBlock.style.order = contentBlockLength + 1;
+	contentBlock.setAttribute('style','order:' + (contentBlockLength + 1) +';')
 
 	container.appendChild(contentBlock);
 	//console.log(params);
@@ -44,7 +47,7 @@ function addElement(item, i) {
 
 	switch (blockType) {
 		case 'kassa-header':
-			console.log('kassa-header');
+			blockData = {container : 'div', type : 'div', multiple : false, content : '###'};
 			break;
 		case 'title':
 			console.log('title');
@@ -52,23 +55,27 @@ function addElement(item, i) {
 			break;
 		case 'subtitle':
 			console.log('subtitle');
-			blockData = {container : 'div', type : 'uploaderOrText', multiple : false};
+			blockData = {container : 'div', type : 'uploaderOrText', multiple : false, content : 'Подзаголовок'};
 			break;
 		case 'upper-slider':
 			console.log('upper-slider');
+			blockData = {container : 'div', type : 'slider', multiple : true, content : 'Верхний слайдер'};
 			break;
 		case 'description':
 			console.log('description');
-			blockData = {container : 'div', type : 'richText', multiple : false};
+			blockData = {container : 'div', type : 'richText', multiple : false, content : 'Описание'};
 			break;
 		case 'map':
 			console.log('map');
+			blockData = {container : 'div', type : 'sheduleMap', multiple : false, content : 'Описание'}
 			break;
 		case 'bottom-slider':
 			console.log('bottom-slider');
+			blockData = {container : 'div', type : 'slider', multiple : true, content : 'Нижний слайдер'};
 			break;
 		case 'kassa-footer':
 			console.log('kassa-footer');
+			blockData = {container : 'div', type : 'div', multiple : false, content : '###'};
 			break;
 		default:
 			console.log('error');

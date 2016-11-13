@@ -7,19 +7,22 @@ function showEditor(dc, parentPlock, block, timestamp) {
 		fontFamilies = dc.createElement('div'),
 		fontSize = dc.createElement('div'),
 		textAlign = dc.createElement('div'),
+		resizeButton = dc.createElement('a'),
 		editorButtonInner = dc.createElement('div'),
-		menuItem = dc.querySelectorAll('[data-id=_' + timestamp + ']')[0];
+		menuItem = dc.querySelectorAll('[data-id=_' + timestamp + ']')[0],
+		resizebleClass = '_resizeble';
 
 	fontColor.className = 'font-color _editor-button';
 	fontFamilies.className = 'font-family _editor-button';
 	fontSize.className = 'font-size _editor-button';
 	textAlign.className = 'text-align _editor-button';
+	resizeButton.className = 'text-align _editor-button';
+	resizeButton.innerHTML = '<span>121</span>'
 
 	editorButtonInner.className = 'editor-button-inner';
+
 	fontSize.appendChild(editorButtonInner);
-
 	fontColor.setAttribute('type','color');
-
 	fontSizes.forEach(function(item,i){
 		console.log(item);
 		var fontMenuItem = dc.createElement('div');
@@ -28,15 +31,16 @@ function showEditor(dc, parentPlock, block, timestamp) {
 		fontMenuItem.textContent = item;
 		editorButtonInner.appendChild(fontMenuItem);
 		fontMenuItem.addEventListener('click', function() {
-			//console.log(item);
 			block.style.fontSize = item;
 		}, false)
 	})
+	resizeButton.addEventListener('click', function(){allowResizeElement(parentPlock, resizebleClass)});
 
 	containerEditior.appendChild(fontColor);
 	containerEditior.appendChild(fontFamilies);
 	containerEditior.appendChild(fontSize);
 	containerEditior.appendChild(textAlign);
+	containerEditior.appendChild(resizeButton);
 	containerEditior.className = 'container-editor';
 
 	parentPlock.appendChild(containerEditior);
@@ -47,4 +51,18 @@ function showEditor(dc, parentPlock, block, timestamp) {
 		console.log(block);
 		block.style.color = fontColor.value;
 	}, false);
+}
+
+
+function allowResizeElement(el, className) {
+	console.log('32');
+	if (el.classList) {
+		el.classList.toggle(className);
+	} else {
+		var classes = el.className.split(' ');
+		var existingIndex = classes.indexOf(className);
+		if (existingIndex >= 0) classes.splice(existingIndex, 1);
+		else classes.push(className);
+			el.className = classes.join(' ');
+	}
 }
