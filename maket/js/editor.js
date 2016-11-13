@@ -1,16 +1,17 @@
-function showEditor(dc, block, timestamp) {
+function showEditor(dc, parentPlock, block, timestamp) {
 	var
 		fontSizes = ['14px', '16px', '18px', '20px', '22px', '24px', '26px', '28px', '30px', '32px', '34px', '36px', '38px', '40px', '42px', '46px', '52px', '62px', '72px', '82px', '92px', '102px'],
+		fontFamilies = []
 		containerEditior = dc.createElement('div'),
 		fontColor = dc.createElement('input'),
-		fontName = dc.createElement('div'),
+		fontFamilies = dc.createElement('div'),
 		fontSize = dc.createElement('div'),
 		textAlign = dc.createElement('div'),
 		editorButtonInner = dc.createElement('div'),
 		menuItem = dc.querySelectorAll('[data-id=_' + timestamp + ']')[0];
 
 	fontColor.className = 'font-color _editor-button';
-	fontName.className = 'font-name _editor-button';
+	fontFamilies.className = 'font-family _editor-button';
 	fontSize.className = 'font-size _editor-button';
 	textAlign.className = 'text-align _editor-button';
 
@@ -26,21 +27,24 @@ function showEditor(dc, block, timestamp) {
 		fontMenuItem.setAttribute('data-font-size', item);
 		fontMenuItem.textContent = item;
 		editorButtonInner.appendChild(fontMenuItem);
+		fontMenuItem.addEventListener('click', function() {
+			//console.log(item);
+			block.style.fontSize = item;
+		}, false)
 	})
 
-
 	containerEditior.appendChild(fontColor);
-	containerEditior.appendChild(fontName);
+	containerEditior.appendChild(fontFamilies);
 	containerEditior.appendChild(fontSize);
 	containerEditior.appendChild(textAlign);
 	containerEditior.className = 'container-editor';
 
-	menuItem.appendChild(containerEditior);
-
+	parentPlock.appendChild(containerEditior);
 
 	//--
 
 	fontColor.addEventListener('input', function() {
-    block.style.color = fontColor.value;
+		console.log(block);
+		block.style.color = fontColor.value;
 	}, false);
 }

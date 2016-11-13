@@ -23,16 +23,51 @@ input[type=color]::-webkit-color-swatch {
 	margin: 10px 5px 0 0;
 	padding: 0;
 	border: none;
+	position: relative;
 }
 input[type=color]._editor-button {
 	background: transparent;
 }
 .font-size._editor-button {
 	height: 30px;
+	overflow: initial;
 }
 .font-size._editor-button > .editor-button-inner {
 	display: none;
+	padding-top: 30px;
+	position: absolute;
+	left: -5px;
+	column-count: 2;
 }
 .font-size._editor-button:hover > .editor-button-inner {
 	display: block;
+}
+.editor._font-size {
+	line-height: 20px;
+	padding: 2px 4px;
+	width: auto;
+}
+.editor-button-inner {
+	background: #fff;
+}
+
+
+
+.side_elements {
+	display: flex;
+	flex-direction: column;
+}
+.side_item.side_item_start {
+	order: 0;
+}
+/*.side_item.side_item_stop {
+	order: 1000;
+	border: none;
+}*/
+.side_item.ghost {
+	background: #f00;
+}
+.side_item.side_item_start:hover, .side_item.side_item_stop:hover {
+	background: transparent;
+	cursor: auto;
 }
