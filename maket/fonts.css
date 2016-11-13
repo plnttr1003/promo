@@ -1,0 +1,10 @@
+@font-face {
+	font-family: 'adm';
+	src: url('fonts/adm.eot?87730193');
+	src: url('fonts/adm.eot?87730193#iefix') format('embedded-opentype'),
+			 url('fonts/adm.woff2?87730193') format('woff2'),
+			 url('fonts/adm.woff?87730193') format('woff'),
+			 url('fonts/adm.ttf?87730193') format('truetype'),
+			 url('fonts/adm.svg?87730193#adm') format('svg');
+	font-weight: normal;
+	font-style: normal;

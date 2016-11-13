@@ -1,7 +1,41 @@
+function extendProto() {
+	Element.prototype.setAttributes = function (attrs) {
+		for (var idx in attrs) {
+			if ((idx === 'styles' || idx === 'style') && typeof attrs[idx] === 'object') {
+					for (var prop in attrs[idx]){this.style[prop] = attrs[idx][prop];}
+			} else if (idx === 'html') {
+					this.innerHTML = attrs[idx];
+			} else {
+					this.setAttribute(idx, attrs[idx]);
+			}
+		}
+	};
+}
+
+function dropzoneSettings(timestamp) {
+	console.log(timestamp);
+	var id = '_' + timestamp;
+	console.log(id);
+	console.log(Dropzone.options[id])
+	Dropzone.options[id] = {
+		paramName: "file", // The name that will be used to transfer the file
+		maxFilesize: 2, // MB
+		previewsContainer: '.content-block',
+		thumbnailWidth:'1200px',
+		accept: function(file, done) {
+			if (file.name == "justinbieber.jpg") {
+				done("Naha, you don't.");
+			}
+			else { done(); }
+		}
+	};
+}
+
 var
 	dc = document;
 
 function init() {
+	extendProto();
 	appendOnClick();
 }
 
@@ -13,25 +47,34 @@ function createBlock(className, item, params) {
 		contentBlockInner = dc.createElement((params && params.container) ? params.container : 'div'),
 		sideElements = dc.querySelectorAll('.side_elements')[0],
 		timestamp = Date.now(),
-		newItem;
+		newItem,
+		dropzoneBlock;
 
 	newItem = item.cloneNode(true);
-	newItem.setAttribute('data-id', '_' + timestamp);
-	newItem.className = 'side_item selected';
+	newItem.setAttributes({
+		'data-id':'_' + timestamp,
+		'class':'side_item selected'
+	})
+
 	sideElements.appendChild(newItem);
 
-	contentBlock.className = 'content-block ' + className + '_block';
-	contentBlock.setAttribute('id', '_' + timestamp);
-	//contentBlock.style.order = contentBlockLength + 1;
-	contentBlock.setAttribute('style','order:' + (contentBlockLength + 1) +';')
+	contentBlock.setAttributes({
+		'id': '_' + timestamp,
+		'style':'order:' + (contentBlockLength + 1) +';',
+		'class':'content-block ' + className + '_block'
+	})
 
 	container.appendChild(contentBlock);
-	//console.log(params);
+	dropzoneSettings(timestamp);
+	dropzoneBlock = new Dropzone('div#_'+timestamp+'', { url: '/file/post'});
+
 
 	contentBlockInner.textContent = ((params && params.content)) ? params.content : 'Содержание';
-	contentBlockInner.className = className + ' content-block-inner _editable';
-	contentBlockInner.setAttribute('data-type', ((params && params.content)) ? params.type : '');
-	contentBlockInner.setAttribute('contenteditable','');
+	contentBlockInner.setAttributes({
+		'data-type':((params && params.content)) ? params.type : '',
+		'contenteditable':'',
+		'class': className + ' content-block-inner _editable'
+	})
 
 	contentBlock.appendChild(contentBlockInner);
 
@@ -47,40 +90,40 @@ function addElement(item, i) {
 
 	switch (blockType) {
 		case 'kassa-header':
-			blockData = {container : 'div', type : 'div', multiple : false, content : '###'};
+			blockData = {container:'div', type:'div', multiple:false, content:'###'};
 			break;
 		case 'title':
 			console.log('title');
-			blockData = {container : 'div', type : 'uploaderOrText', multiple : false, content : 'Заголовок'};
+			blockData = {container:'div', type:'uploaderOrText', multiple:false, content:'Заголовок'};
 			break;
 		case 'subtitle':
 			console.log('subtitle');
-			blockData = {container : 'div', type : 'uploaderOrText', multiple : false, content : 'Подзаголовок'};
+			blockData = {container:'div', type:'uploaderOrText', multiple:false, content:'Подзаголовок'};
 			break;
 		case 'upper-slider':
 			console.log('upper-slider');
-			blockData = {container : 'div', type : 'slider', multiple : true, content : 'Верхний слайдер'};
+			blockData = {container:'div', type:'slider', multiple:true, content:'Верхний слайдер'};
 			break;
 		case 'description':
 			console.log('description');
 			blockData = {
-				container : 'div',
-				type : 'richText',
-				multiple : false,
-				content : 'Здесь должно быть описание. Описание может быть любой длины. Короткое или длинное. Здесь должно быть описание. Описание может быть любой длины. Короткое или длинное.'
+				container:'div',
+				type:'richText',
+				multiple:false,
+				content:'Здесь должно быть описание. Описание может быть любой длины. Короткое или длинное. Здесь должно быть описание. Описание может быть любой длины. Короткое или длинное.'
 			};
 			break;
 		case 'map':
 			console.log('map');
-			blockData = {container : 'div', type : 'sheduleMap', multiple : false, content : 'Карта'}
+			blockData = {container:'div', type:'sheduleMap', multiple:false, content:'Карта'}
 			break;
 		case 'bottom-slider':
 			console.log('bottom-slider');
-			blockData = {container : 'div', type : 'slider', multiple : true, content : 'Нижний слайдер'};
+			blockData = {container:'div', type:'slider', multiple:true, content:'Нижний слайдер'};
 			break;
 		case 'kassa-footer':
 			console.log('kassa-footer');
-			blockData = {container : 'div', type : 'div', multiple : false, content : '###'};
+			blockData = {container:'div', type:'div', multiple:false, content:'###'};
 			break;
 		default:
 			console.log('error');
@@ -124,6 +167,7 @@ function sortableMenu(dc, rootEl, contentBlock){
 				[].slice.call(rootEl.children).forEach(function(item,i){
 					if (item.dataset && item.dataset.id) {
 						dc.getElementById(item.dataset.id).style.order = i;
+						dc.getElementById(item.dataset.id).style.color = '#000';
 					};
 				})
 		}

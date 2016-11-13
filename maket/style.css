@@ -30,6 +30,7 @@ body > .container {
 .content-block-inner {
 	min-width: 400px;
 	max-width: 1000px;
+	width: 100%;
 }
 .content-block-inner.title {
 	text-align: center;
