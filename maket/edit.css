@@ -102,8 +102,16 @@ input[type=color]::-webkit-color-swatch {
 	position: relative;
 }
 ._editable:hover {
-	outline: 10px dashed #ececec;
-	outline-offset: 9px;
+	outline: 2px dashed #ececec;
+	outline-offset: 1px;
+}
+.content-block-uploader {
+    padding: 15px;
+}
+.content-block-uploader:hover {
+	outline: 4px dashed #ececec;
+	outline-offset: 0px
+	background: #fefefe;
 }
 .container-editor {
 	display: flex;

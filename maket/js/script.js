@@ -1,3 +1,11 @@
+var
+	dc = document;
+
+function init() {
+	extendProto();
+	appendOnClick();
+}
+
 function extendProto() {
 	Element.prototype.setAttributes = function (attrs) {
 		for (var idx in attrs) {
@@ -18,8 +26,8 @@ function dropzoneSettings(timestamp) {
 	console.log(id);
 	console.log(Dropzone.options[id])
 	Dropzone.options[id] = {
-		paramName: "file", // The name that will be used to transfer the file
-		maxFilesize: 2, // MB
+		paramName: "file",
+		maxFilesize: 2,
 		previewsContainer: '.content-block',
 		thumbnailWidth:'1200px',
 		accept: function(file, done) {
@@ -31,20 +39,13 @@ function dropzoneSettings(timestamp) {
 	};
 }
 
-var
-	dc = document;
-
-function init() {
-	extendProto();
-	appendOnClick();
-}
-
 function createBlock(className, item, params) {
 	var
 		container = dc.querySelectorAll('.container')[0],
 		contentBlockLength = dc.querySelectorAll('.content-block').length,
 		contentBlock = dc.createElement('div'),
-		contentBlockInner = dc.createElement((params && params.container) ? params.container : 'div'),
+		contentBlockInner = dc.createElement('div'),
+		contentBlockText = dc.createElement((params && params.container) ? params.container : 'div'), //!!!!
 		sideElements = dc.querySelectorAll('.side_elements')[0],
 		timestamp = Date.now(),
 		newItem,
@@ -65,21 +66,27 @@ function createBlock(className, item, params) {
 	})
 
 	container.appendChild(contentBlock);
-	dropzoneSettings(timestamp);
-	dropzoneBlock = new Dropzone('div#_'+timestamp+'', { url: '/file/post'});
 
-
-	contentBlockInner.textContent = ((params && params.content)) ? params.content : 'Содержание';
 	contentBlockInner.setAttributes({
+		'data-type':'uploader',
+		'class': className + ' content-block-uploader '
+	})
+
+	contentBlockText.textContent = ((params && params.content)) ? params.content : 'Содержание';
+	contentBlockText.setAttributes({
 		'data-type':((params && params.content)) ? params.type : '',
 		'contenteditable':'',
 		'class': className + ' content-block-inner _editable'
 	})
 
+	contentBlockInner.appendChild(contentBlockText);
 	contentBlock.appendChild(contentBlockInner);
 
+	dropzoneSettings(timestamp);
+	dropzoneBlock = new Dropzone('div#_'+timestamp+' .content-block-uploader', { url: '/file/post'});
+
 	sortableMenu(dc, sideElements, contentBlock);
-	showEditor(dc, contentBlock, contentBlockInner, timestamp);
+	showEditor(dc, contentBlock, contentBlockText, timestamp);
 }
 
 function addElement(item, i) {
@@ -130,12 +137,10 @@ function addElement(item, i) {
 
 			blockData = blockData ? blockData : ''
 	}
-
 	createBlock(blockType, item, blockData);
-
 	console.log('==================');
-
 }
+
 function appendOnClick() {
 	var sideItem = dc.querySelectorAll('.side_item');
 	sideItem.forEach(function(item, i){
