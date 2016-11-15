@@ -60,10 +60,13 @@ exports.add_form = function(req, res) {
 		console.log(promoObjects[key]);
 	}
 
-	var parameters = [];
+	console.log(':::::::::::::::::');
+	console.log(promoObjects['title'])
+	//promo['ru'].title = promoObjects['title'];
+
 
 	var promo = new Promo();
-
+	promo.title = promoObjects['title'],
 	promo.save(function() {
 		res.redirect('/auth/promo');
 	});

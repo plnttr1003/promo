@@ -13,5 +13,5 @@ block content
 		each item in promo
 			.content_item
 				a.item_link(href='/promo/' + item._id)
-					span.item_title= item.i18n.title.get(locale)
+					span.item_title= item.title
 						span.item_date= ' / ' + item.date.getDate() + ' ' + months[item.date.getMonth()] + ' ' + item.date.getFullYear()

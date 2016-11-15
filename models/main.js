@@ -26,7 +26,7 @@ var promoSchema = new Schema({
 	// --------------------------------------
 
 	//title block
-	title: { type: String, trim: true, locale: true },
+	title: String,
 	title_font_size: Number,
 	title_custom_css: String,
 

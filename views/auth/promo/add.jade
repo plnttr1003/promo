@@ -18,6 +18,7 @@ block content
 	form(action="/auth/promo/add", method="post")
 		.side
 			.side_inner
+				input(name='title', type='text', placeholder='Название')
 				input#side_menu_checkbox.side_menu_checkbox(type='checkbox')
 				label(for='side_menu_checkbox')
 					span.items_show +
