@@ -1,121 +1,220 @@
-.main_block
-  overflow hidden
+.content-block {
+	position: relative;
+}
+.content-block._resizeble {
+	resize: vertical;
+	overflow: auto;
+	outline: 1px dashed #b7b7b7;
+	outline-offset: -1px;
+	height: auto;
+}
+.side {
+	position: fixed;
+	width: 14%;
+	height: 100%;
+	background: #fffcf0;
+	z-index: 2;
+}
+.side_inner {
+	padding: 10px;
+}
+.side_menu_checkbox {
+	margin: 0 3px 0 0;
+	width: 17px;
+	height: 17px;
+	display: inline-block;
+	position: relative;
+}
+.side_menu_checkbox ~ label {
+	color: #000000;
+	cursor: pointer;
+	font-size: 30px;
+	line-height: 23px;
+}
+.side_menu_checkbox ~ label .items_hide  {
+	display: none;
+}
+.side_menu_checkbox ~ .side_menu {
+	display: none;
+}
+.side_menu_checkbox ~ label:hover {
+	color: #ff781a;
+}
+.side_menu_checkbox:not(checked) {
+	position: absolute;
+	opacity: 0;
+}
+.side_menu_checkbox:not(checked) + label {
+	position: relative;
+	padding: 0;
+}
+.side_menu_checkbox:checked ~ .side_menu {
+	display: block;
+	margin-bottom: 20px;
+}
+.side_menu_checkbox:checked ~ label .items_hide {
+	display: block;
+}
+.side_menu_checkbox:checked ~ label .items_show {
+	display: none;
+}
 
-.footer_block
-  clear both
+.side_menu:hover {
+	height: auto;
+}
+.side_item {
+	padding: 10px 8px;
+	border-bottom: 1px solid #e4ddbf;
+	line-height: 16px;
+	font-size: 13px;
+}
+.side_item:hover {
+	background: #fff;
+	cursor: pointer;
+}
+.side_menu .side_item {
+	background: #fff;
+}
+.side_menu .side_item:hover:after {
+	content:'+';
+	display:inline-block;
+	float:right;
+	border:1px solid;
+	border-radius:50%;
+	padding:2px;
+	line-height: 13px;
+	width: 16px;
+	text-align: center;
+	font-size: 21px;
+	height: 16px;
+	margin-top: 2px;
+}
 
-.content_block
-  float left
-  width 1020px
-  margin-bottom 20px
-
-.content_right_block
-  float left
-
-.form_options
-  width 225px
-  margin-left 20px
-  margin-top 506px
-  border 2px solid black
-  padding 5px
-
-.form_image_main
-  width 1280px
-  height 400px
-  margin-top 20px
-  background-size cover
-  background-position center
-  background-color #a2c179
-
-.form_images_second
-  width 1280px
-  min-height 400px
-  overflow hidden
-  margin-top 20px
-  background-color #6679c1
-
-.image_second_preview
-  width 400px
-  height 400px
-  float left
-  position relative
-  background-size cover
-  background-position center
-  margin-right 40px
-  margin-bottom 20px
-  background-color #c17848
-  &:nth-child(4n)
-    margin-right 0px
-
-.image_second_description
-  width 400px
-  min-height 40px
-  outline none
-  position absolute
-  bottom 0
-  background-color #76c169
-
-.form_images_maps
-  width 1280px
-  min-height 400px
-  overflow hidden
-  margin-top 20px
-  background-color #c19db9
-
-.image_maps_preview
-  width 240px
-  height 240px
-  float left
-  position relative
-  background-size cover
-  background-position center
-  margin-right 20px
-  margin-bottom 20px
-  background-color #c17848
-  &:nth-child(6n)
-    margin-right 0px
-
-.image_maps_description
-  width 240px
-  min-height 40px
-  outline none
-  position absolute
-  bottom 0
-  background-color #65abc1
-
-.form_title
-  width 1020px
-  border 2px solid #23c15a
-  margin-top 20px
-  outline 0px
-  font 16pt/18pt 'helveticaneuecyrlight'
-
-.form_desc_title
-  position absolute
-  display inline-block
-  font 12pt/14pt 'helveticaneuecyrlight'
-
-.form_description
-  width 1020px
-  min-height 300px
-  margin-top 20px
-  outline 0px
-  font 12pt/14pt 'helveticaneuecyrlight'
-  border 2px solid #4e8dc1
-
-.submit
-  width 120px
-  height 25px
-  margin-top 20px
-  padding-top 5px
-  font 12pt/14pt 'helveticaneuecyrlight'
-  text-align center
-  border 2px solid #c1324b
-  &:hover
-    cursor pointer
-    color white
-    background-color #c1324b
-
-#image_main_fallback, #images_second_fallback
-  display none
-
+input[type=color]::-webkit-color-swatch-wrapper {
+	padding: 0;
+}
+input[type=color]::-webkit-color-swatch {
+	border: none;
+}
+._editable {
+	position: relative;
+}
+._editable:hover {
+	outline: 2px dashed #ececec;
+	outline-offset: 1px;
+}
+.content-block-uploader {
+    padding: 15px;
+}
+.content-block-uploader:hover {
+	outline: 4px dashed #ececec;
+	outline-offset: 0px
+	background: #fefefe;
+}
+.container-editor {
+	display: flex;
+	position: absolute;
+	right: 0;
+	top: 0;
+	left: 0;
+	justify-content: center;
+}
+._editor-button {
+	height: 18px;
+	width: 30px;
+	background: rgba(0, 0, 0, 0.1);
+	margin: 10px 5px 0 0;
+	padding: 0;
+	border: none;
+	position: relative;
+}
+.text-align._editor-button, .font-size._editor-button {
+	width: auto;
+	background: transparent;
+}
+.text-align._editor-button span, .font-size._editor-button span {
+	font-family: adm;
+	font-size:14px;
+	padding:0 4px;
+	color: #777;
+}
+.text-align._editor-button span:hover {
+	cursor: pointer;
+	color: #000;
+}
+a.resize._right_editor-button {
+	position: absolute;
+	font-size: 131px;
+	top: 0;
+	right: 20px;
+	bottom: 0;
+	width: 170px;
+	overflow: hidden;
+	opacity: 0;
+}
+a.resize._right_editor-button:hover, .content-block._resizeble .resize._right_editor-button {
+		opacity:1;
+}
+a.resize._right_editor-button:hover:after {
+	content: '';
+	display: block;
+	position: absolute;
+	bottom: 0%;
+	width: 100%;
+	height: 1px;
+	background: rgba(204, 204, 204, 0.58);
+}
+a.resize._right_editor-button span {
+	transform-origin: 0;
+	transform: rotate3d(0,0,1, 90deg) translate3d(-70px,-83px,0);
+	display: block;
+	letter-spacing: 3px;
+	font-weight: bold;
+	text-transform: uppercase;
+	width: 100vmin;
+	color: rgba(0, 0, 0, 0.25);
+	font-weight: 800;
+}
+input[type=color]._editor-button {
+	background: transparent;
+}
+.font-size._editor-button {
+	height: 30px;
+	overflow: initial;
+}
+.font-size._editor-button > .editor-button-inner {
+	display: none;
+	padding-top: 4px;
+	position: absolute;
+	left: -8px;
+	column-count: 2;
+	column-gap: 0px;
+}
+.font-size._editor-button:hover > .editor-button-inner {
+	display: block;
+}
+.font-size._editor-button:hover span {
+	color: #000;
+}
+.editor._font-size {
+	line-height: 20px;
+	padding: 2px 6px;
+	width: auto;
+}
+.editor-button-inner {
+	background: #fff;
+}
+.side_elements {
+	display: flex;
+	flex-direction: column;
+}
+.side_item.side_item_start {
+	order: 0;
+}
+.side_item.ghost {
+	background: #f00;
+}
+.side_item.side_item_start:hover, .side_item.side_item_stop:hover {
+	background: transparent;
+	cursor: auto;
+}

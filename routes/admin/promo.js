@@ -14,27 +14,20 @@ var __appdir = path.dirname(require.main.filename);
 // *** Handlers Block ***
 // ------------------------
 
-
 var checkNested = function (obj, layers) {
 
-	if (typeof layers == 'string') {
-		layers = layers.split('.');
-	}
+	if (typeof layers == 'string') {layers = layers.split('.');}
 
 	for (var i = 0; i < layers.length; i++) {
-		if (!obj || !obj.hasOwnProperty(layers[i])) {
-			return false;
-		}
+		if (!obj || !obj.hasOwnProperty(layers[i])) {return false;}
 		obj = obj[layers[i]];
 	}
 	return true;
 }
 
-
 // ------------------------
 // *** Admin promo Block ***
 // ------------------------
-
 
 exports.list = function(req, res) {
 	Promo.find().sort('-date').exec(function(err, promo) {
@@ -42,11 +35,9 @@ exports.list = function(req, res) {
 	});
 }
 
-
 // ------------------------
 // *** Add promo Block ***
 // ------------------------
-
 
 exports.add = function(req, res) {
 	res.render('auth/promo/add.jade');
@@ -54,108 +45,28 @@ exports.add = function(req, res) {
 
 exports.add_form = function(req, res) {
 	var post = req.body;
-	var files = req.files;
-	var images = [];
+	var	promoObjects = post;
+
+	console.log('================');
+	console.log(typeof promoObjects);
+	/*promoObjects.forEach(function(item){
+		console.log('------------');
+		console.log(item);
+	})*/
+	console.log(promoObjects);
+
+	for (var key in promoObjects) {
+		console.log(key);
+		console.log(promoObjects[key]);
+	}
+
+	var parameters = [];
 
 	var promo = new Promo();
 
-	var locales = post.en ? ['ru', 'en'] : ['ru'];
-
-	locales.forEach(function(locale) {
-		checkNested(post, [locale, 'title'])
-			&& promo.setPropertyLocalised('title', post[locale].title, locale);
-
-		checkNested(post, [locale, 'description'])
-			&& promo.setPropertyLocalised('description', post[locale].description, locale);
-
-		checkNested(post, [locale, 'subtitle'])
-			&& promo.setPropertyLocalised('subtitle', post[locale].subtitle, locale);
-
+	promo.save(function() {
+		res.redirect('/auth/promo');
 	});
-
-	promo.movie = post.movie;
-	promo.widget_key = post.widget_key;
-	promo.imax = post.imax;
-	promo.map = post.map;
-	promo.map_zoom = post.map_zoom;
-	promo.buy_button = post.buy_button;
-	promo.position = post.position;
-	promo.code = post.code;
-
-
-	promo.date = new Date(Date.UTC(post.date.year, post.date.month, post.date.date));
-	promo.status = post.status;
-
-	promo.videos = post.videos.filter(function(n){ return n != '' });
-
-
-	if (!post.images) {
-		return (function () {
-			promo.images = [];
-			promo.save(function(err, promo) {
-				res.redirect('back');
-			});
-		})();
-	}
-
-	var public_path = __appdir + '/public';
-
-	var images_path = {
-		original: '/images/promo/' + promo._id + '/original/',
-		thumb: '/images/promo/' + promo._id + '/thumb/',
-	}
-
-	mkdirp.sync(public_path + images_path.original);
-	mkdirp.sync(public_path + images_path.thumb);
-
-	post.images.path.forEach(function(item, i) {
-		var image_obj = {};
-		image_obj.path = post.images.path[i];
-		image_obj.description = {ru:null, en:null};
-
-		if (post.images.description.ru) {
-			image_obj.description.ru = post.images.description.ru[i];
-		}
-
-		if (post.images.description.en) {
-			image_obj.description.en = post.images.description.en[i];
-		}
-
-		images.push(image_obj);
-	});
-
-	async.forEachSeries(images, function(image, callback) {
-		var name = new Date();
-		name = name.getTime();
-		var original_path = images_path.original + name + '.jpg';
-		var thumb_path = images_path.thumb + name + '.jpg';
-
-		gm(public_path + image.path).resize(520, false).write(public_path + thumb_path, function() {
-			gm(public_path + image.path).write(public_path + original_path, function() {
-				var image_obj = {};
-				image_obj.original = original_path;
-				image_obj.thumb = thumb_path;
-				image_obj.description = [{
-					lg: 'ru',
-					value: image.description.ru
-				}]
-				if (image.description.en) {
-					image_obj.description.push({
-						lg: 'en',
-						value: image.description.en
-					})
-				}
-				promo.images.push(image_obj);
-				callback();
-			});
-		});
-	}, function() {
-		promo.save(function() {
-			res.redirect('/auth/promo');
-		});
-	});
-
-
 }
 
 
