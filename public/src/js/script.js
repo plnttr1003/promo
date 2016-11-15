@@ -84,7 +84,7 @@ function createBlock(className, item, params) {
 	contentBlockHelper.setAttributes({
 		'class': className + ' content-block-helper _editable'
 	})
-	contentBlockHelper.innerHTML = '<input type="text" name="_' + timestamp + '"></input>';
+	contentBlockHelper.innerHTML = '<input type="text" value="{styles:\'background:#fc0\', divId:\'er2\', className:\'classu\'}" name="container"></input>';
 
 
 	contentBlockInner.appendChild(contentBlockText);

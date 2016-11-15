@@ -12,8 +12,21 @@ var userSchema = new Schema({
 });
 
 var promoSchema = new Schema({
+	title: String,
+	container: [{
+		styles: String,
+		divId: Number,
+		className : String
+	}],
+	block: [{
+		styles: String,
+		order: Number,
+		divId: Number,
+		className : String
+	}],
+	date: {type: Date, default: Date.now}
 	//movie params
-	movie: Number,
+	/*movie: Number,
 	widget_key: String,
 	imax: Boolean,
 
@@ -59,7 +72,7 @@ var promoSchema = new Schema({
 	status: String,
 
 	code: String //-
-
+	*/
 });
 
 // ------------------------

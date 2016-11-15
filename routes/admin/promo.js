@@ -47,26 +47,33 @@ exports.add_form = function(req, res) {
 	var post = req.body;
 	var	promoObjects = post;
 
-	console.log('================');
-	console.log(typeof promoObjects);
-	/*promoObjects.forEach(function(item){
-		console.log('------------');
-		console.log(item);
-	})*/
-	console.log(promoObjects);
-
-	for (var key in promoObjects) {
-		console.log(key);
-		console.log(promoObjects[key]);
-	}
-
-	console.log(':::::::::::::::::');
-	console.log(promoObjects['title'])
-	//promo['ru'].title = promoObjects['title'];
-
-
 	var promo = new Promo();
 	promo.title = promoObjects['title'],
+	promo.container = [];
+
+	console.log(promo.container);
+	console.log('--+---+---+---+--')
+	console.log(post.container);
+
+	post.container.forEach(function(item, i) {
+		console.log('==================')
+		console.log(item);
+		console.log('------------------')
+		console.log(i);
+		//promo.container[i] = item;
+		//console.log(promo.container[i]);
+		console.log('++++++++++++++++++')
+		console.log(promo.container);
+		var promo_obj = {};
+		promo_obj.styles = item;
+		promo_obj.divId = item;
+		promo_obj.className = item;
+
+		promo.container.push(promo_obj);
+	});
+
+
+
 	promo.save(function() {
 		res.redirect('/auth/promo');
 	});
@@ -79,10 +86,10 @@ exports.add_form = function(req, res) {
 
 
 exports.edit = function(req, res) {
-  var id = req.params.id;
-  var public_path = __appdir + '/public';
-  var preview_path = '/images/preview/';
-  var images_preview = [];
+	var id = req.params.id;
+	var public_path = __appdir + '/public';
+	var preview_path = '/images/preview/';
+	var images_preview = [];
 
 	Promo.findById(id).exec(function(err, promo) {
 		async.forEach(promo.images, function(image, callback) {
