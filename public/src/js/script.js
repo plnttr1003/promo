@@ -4,6 +4,7 @@ var
 function init() {
 	extendProto();
 	appendOnClick();
+	submitForm();
 }
 
 function extendProto() {
@@ -18,6 +19,27 @@ function extendProto() {
 			}
 		}
 	};
+}
+
+function submitForm() {
+	var
+		form = dc.querySelectorAll('form')[0],
+		contentBlocksOnSubmit;
+	form.addEventListener('submit', function(event){
+		event.preventDefault();
+		contentBlocksOnSubmit = dc.querySelectorAll('.content-block');
+		console.log(contentBlocksOnSubmit);
+		contentBlocksOnSubmit.forEach(function(item){
+			var
+				blockStyle = item.getAttribute('style'),
+				divId = item.getAttribute('id'),
+				innerBlockStyle = item.querySelectorAll('div._editable')[0].getAttribute('style'),
+				innerBlockClass = item.querySelectorAll('div._editable')[0].getAttribute('class').replace(' _editable', ''),
+				innerBlockText = item.querySelectorAll('div._editable')[0].textContent;
+			item.querySelectorAll('input')[0].value = "{divId:'" + divId + "',styles:'" + blockStyle + "', stylesInner:'" + ((innerBlockStyle) ? innerBlockStyle : '') + "', className:'" + innerBlockClass + "', text:'" + innerBlockText + "'}";
+		})
+		form.submit();
+	})
 }
 
 function dropzoneSettings(timestamp) {
@@ -46,7 +68,7 @@ function createBlock(className, item, params) {
 		contentBlock = dc.createElement('div'),
 		contentBlockInner = dc.createElement('div'),
 		contentBlockText = dc.createElement((params && params.container) ? params.container : 'div'),
-		contentBlockHelper = dc.createElement('div'),
+		contentBlockHelper = dc.createElement('input'),
 		sideElements = dc.querySelectorAll('.side_elements')[0],
 		timestamp = Date.now(),
 		newItem,
@@ -80,11 +102,14 @@ function createBlock(className, item, params) {
 		'class': className + ' content-block-inner _editable'
 	})
 
-
 	contentBlockHelper.setAttributes({
-		'class': className + ' content-block-helper _editable'
+		'class': className + ' content-block-helper _editable',
+		'type': 'text',
+		'name': 'container',
+		'id': '__' + timestamp
 	})
-	contentBlockHelper.innerHTML = '<input type="text" value="{styles:\'background:#fc0\', divId:\'er2\', className:\'classu\'}" name="container"></input>';
+
+	//innerHTML = '<input type="text" value="{styles:\'background:#fc0\', divId:\'er2\', className:\'classu\'}" name="container"></input>';
 
 
 	contentBlockInner.appendChild(contentBlockText);
@@ -95,7 +120,7 @@ function createBlock(className, item, params) {
 	dropzoneBlock = new Dropzone('div#_'+timestamp+' .content-block-uploader', { url: '/file/post'});
 
 	sortableMenu(dc, sideElements, contentBlock);
-	showEditor(dc, contentBlock, contentBlockText, timestamp);
+	showEditor(dc, contentBlock, contentBlockText, contentBlockHelper, timestamp);
 }
 
 function addElement(item, i) {

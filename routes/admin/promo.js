@@ -51,27 +51,20 @@ exports.add_form = function(req, res) {
 	promo.title = promoObjects['title'],
 	promo.container = [];
 
-	console.log(promo.container);
-	console.log('--+---+---+---+--')
 	console.log(post.container);
 
-	post.container.forEach(function(item, i) {
-		console.log('==================')
-		console.log(item);
-		console.log('------------------')
-		console.log(i);
-		//promo.container[i] = item;
-		//console.log(promo.container[i]);
-		console.log('++++++++++++++++++')
-		console.log(promo.container);
-		var promo_obj = {};
-		promo_obj.styles = item;
-		promo_obj.divId = item;
-		promo_obj.className = item;
-
-		promo.container.push(promo_obj);
-	});
-
+	if (post.container) {
+		post.container.forEach(function(item, i) {
+			var promo_obj = {};
+			var itemStyles = JSON.parse( JSON.stringify(eval("(" + item + ")")) );
+			promo_obj.divId = itemStyles.divId;
+			promo_obj.styles = itemStyles.styles;
+			promo_obj.stylesInner = itemStyles.stylesInner;
+			promo_obj.className = itemStyles.className;
+			promo_obj.text = itemStyles.text;
+			promo.container.push(promo_obj);
+		});
+	}
 
 
 	promo.save(function() {
@@ -232,6 +225,8 @@ exports.edit_form = function(req, res) {
 
 exports.remove = function(req, res) {
 	var id = req.body.id;
+	console.log('-----------');
+	console.log(req.body);
 	Promo.findByIdAndRemove(id, function() {
 		del.sync(__appdir + '/public/images/promo/' + id);
 		res.send('ok');

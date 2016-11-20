@@ -1,14 +1,29 @@
-$(document).ready(function() {
-	function remove (event) {
-		var id  = $(this).attr('id');
+function removeItem() {
+	var
+	dc = document,
+	rm_item = document.querySelectorAll('.rm_item');
+		rm_item.forEach(function(item){
+			item.addEventListener('click', function(event) {
+				if (confirm('Удалить?')) {
+					var
+						requestURL = window.location.pathname + '/remove',
+						params='id='+ item.getAttribute('id'),
+						request = new XMLHttpRequest();
 
-		if (confirm(event.data.description)) {
-			$.post(event.data.path, {'id': id}).done(function() {
-				location.reload();
+					request.open("POST", requestURL, true);
+					request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+					request.send(params);
+
+					window.location.reload();
+				}
 			});
-		}
+		})
+}
+(function ready(fn) {
+	if (document.readyState != 'loading'){
+		fn();
+	} else {
+		document.addEventListener('DOMContentLoaded', fn);
 	}
+})(removeItem)
 
-	$('.rm_user').on('click', {path:'/auth/users/remove', description: 'Удалить пользователя?'}, remove);
-	$('.rm_promo').on('click', {path:'/auth/promo/remove', description: 'Удалить промо?'}, remove);
-});

@@ -1,4 +1,4 @@
-function showEditor(dc, parentPlock, block, timestamp) {
+function showEditor(dc, parentPlock, block, input, timestamp) {
 	var
 		fontSizes = ['14px', '16px', '18px', '20px', '22px', '24px', '26px', '28px', '30px', '32px', '34px', '36px', '38px', '40px', '42px', '46px', '52px', '62px', '72px', '82px', '92px', '102px', '112px', '120px'],
 		fontFamilies = ['helvetica', 'arial'],
@@ -36,6 +36,8 @@ function showEditor(dc, parentPlock, block, timestamp) {
 		fontSizeInner.appendChild(fontMenuItem);
 		fontMenuItem.addEventListener('click', function() {
 			block.style.fontSize = item;
+			//
+			input.value="{styles:'"+ block.getAttribute('style') +"'}";
 		}, false)
 	})
 
@@ -44,6 +46,8 @@ function showEditor(dc, parentPlock, block, timestamp) {
 		console.log(item.dataset.align);
 		item.addEventListener('click', function(){
 			block.style.textAlign = item.dataset.align;
+			//
+			input.value="{styles:'"+ block.getAttribute('style') +"'}";
 		})
 	});
 
@@ -63,6 +67,8 @@ function showEditor(dc, parentPlock, block, timestamp) {
 
 	fontColor.addEventListener('input', function() {
 		block.style.color = fontColor.value;
+		//
+		input.value="{styles:'"+ block.getAttribute('style') +"'}";
 	}, false);
 }
 
