@@ -36,8 +36,6 @@ function showEditor(dc, parentPlock, block, input, timestamp) {
 		fontSizeInner.appendChild(fontMenuItem);
 		fontMenuItem.addEventListener('click', function() {
 			block.style.fontSize = item;
-			//
-			input.value="{styles:'"+ block.getAttribute('style') +"'}";
 		}, false)
 	})
 
@@ -46,8 +44,6 @@ function showEditor(dc, parentPlock, block, input, timestamp) {
 		console.log(item.dataset.align);
 		item.addEventListener('click', function(){
 			block.style.textAlign = item.dataset.align;
-			//
-			input.value="{styles:'"+ block.getAttribute('style') +"'}";
 		})
 	});
 
@@ -67,8 +63,6 @@ function showEditor(dc, parentPlock, block, input, timestamp) {
 
 	fontColor.addEventListener('input', function() {
 		block.style.color = fontColor.value;
-		//
-		input.value="{styles:'"+ block.getAttribute('style') +"'}";
 	}, false);
 }
 
