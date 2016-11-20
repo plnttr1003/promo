@@ -45,7 +45,7 @@ exports.add = function(req, res) {
 
 exports.add_form = function(req, res) {
 	var post = req.body;
-	var	promoObjects = post;
+	var promoObjects = post;
 
 	var promo = new Promo();
 	promo.title = promoObjects['title'],
@@ -79,15 +79,27 @@ exports.add_form = function(req, res) {
 
 
 exports.edit = function(req, res) {
+
 	var id = req.params.id;
 	console.log(req.params.id);
-	res.render('auth/promo/add.jade');
-}
+	Promo.findById(id).exec(
+		function(err, promo) {
+				async.forEach(promo.container, function(container, callback) {
+					callback();
+				}, function() {
+					res.render('auth/promo/add.jade', {
+						promo: promo,
+						containerOutput: JSON.stringify(promo.container)
+					});
+				});
+		});
+	}
 
 
 exports.edit_form = function(req, res) {
 	var post = req.body;
-	var	promoObjects = post;
+	var id = req.params.id;
+	var promoObjects = post;
 
 	var promo = new Promo();
 	promo.title = promoObjects['title'],

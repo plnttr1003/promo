@@ -176,6 +176,7 @@ function addElement(item, i) {
 	console.log('==================');
 }
 
+
 function appendOnClick() {
 	var sideItem = dc.querySelectorAll('.side_item');
 	sideItem.forEach(function(item, i){

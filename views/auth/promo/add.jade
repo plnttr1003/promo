@@ -11,10 +11,8 @@ block content_scripts
 	script(type='text/javascript', src='/build/js/libs/dropzone.js')
 	script(type='text/javascript', src='/build/js/editor.js')
 	script(type='text/javascript', src='/build/js/script.js')
-
 block content
-	.iii= promo
-	form(action="/auth/promo/add", method="post")
+	form(action='/auth/promo/'+ (!promo ? 'add' : 'edit'), method='post')
 		.side
 			.side_inner
 				input(name='title', type='text', placeholder='Название')
@@ -35,7 +33,12 @@ block content
 					.side_item.side_item_start
 				input(type='submit', value='отправить')
 		.container
-
-
-
-
+			if (promo)
+				each container in promo.container
+					.content-block(id=container.divId, style=container.styles, class=container.className + '_block')
+						div(data-type="uploader", class="title content-block-uploader dz-clickable")
+							div(class=container.className + ' _editable', style=container.stylesInner, contenteditable)= container.text
+						input.title.content-block-helper._editable(type='text', name='container', id='')
+						div.container-editor
+						a.resize._right_editor-button
+							span Растянуть
