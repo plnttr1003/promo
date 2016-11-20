@@ -6,6 +6,8 @@ block content_style
 block content_scripts
 block content
 	.container
+		.aaa= header
 		each container in promo.container
 			.content-block(id=container.divId, style=container.styles)
 				div(class=container.className, style=container.stylesInner)= container.text
+		.bbb= footer

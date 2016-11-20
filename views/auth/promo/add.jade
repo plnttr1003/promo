@@ -31,14 +31,9 @@ block content
 					.side_item(data-block-type='kassa-footer') Footer Кассы
 				.side_elements
 					.side_item.side_item_start
+				if (promo)
+					.hidden_side_elements
+						each container in promo.container
+							.hidden_item(data-params= container)
 				input(type='submit', value='отправить')
 		.container
-			if (promo)
-				each container in promo.container
-					.content-block(id=container.divId, style=container.styles, class=container.className + '_block')
-						div(data-type="uploader", class="title content-block-uploader dz-clickable")
-							div(class=container.className + ' _editable', style=container.stylesInner, contenteditable)= container.text
-						input.title.content-block-helper._editable(type='text', name='container', id='')
-						div.container-editor
-						a.resize._right_editor-button
-							span Растянуть

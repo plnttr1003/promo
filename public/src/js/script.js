@@ -4,6 +4,7 @@ var
 function init() {
 	extendProto();
 	appendOnClick();
+	checkExist();
 	submitForm();
 }
 
@@ -62,6 +63,13 @@ function dropzoneSettings(timestamp) {
 }
 
 function createBlock(className, item, params) {
+
+	console.log('--=-=====----=');
+	console.log(className);
+	console.log(params);
+	console.log('--=-=====----=');
+
+
 	var
 		container = dc.querySelectorAll('.container')[0],
 		contentBlockLength = dc.querySelectorAll('.content-block').length,
@@ -79,12 +87,14 @@ function createBlock(className, item, params) {
 		'data-id':'_' + timestamp,
 		'class':'side_item selected'
 	})
+	if (params.title)
+		newItem.textContent = params.title;
 
 	sideElements.appendChild(newItem);
 
 	contentBlock.setAttributes({
 		'id': '_' + timestamp,
-		'style':'order:' + (contentBlockLength + 1) +';',
+		'style': (params.styles ? params.styles : 'order:' + (contentBlockLength + 1) +';'),
 		'class':'content-block ' + className + '_block'
 	})
 
@@ -99,7 +109,8 @@ function createBlock(className, item, params) {
 	contentBlockText.setAttributes({
 		'data-type':((params && params.content)) ? params.type : '',
 		'contenteditable':'',
-		'class': className + ' content-block-inner _editable'
+		'class': className + ' content-block-inner _editable',
+		'style': (params.stylesInner ? params.stylesInner : '')
 	})
 
 	contentBlockHelper.setAttributes({
@@ -108,9 +119,6 @@ function createBlock(className, item, params) {
 		'name': 'container',
 		'id': '__' + timestamp
 	})
-
-	//innerHTML = '<input type="text" value="{styles:\'background:#fc0\', divId:\'er2\', className:\'classu\'}" name="container"></input>';
-
 
 	contentBlockInner.appendChild(contentBlockText);
 	contentBlock.appendChild(contentBlockInner);
@@ -125,25 +133,28 @@ function createBlock(className, item, params) {
 
 function addElement(item, i) {
 	var
-		blockType = item.dataset.blockType,
+		blockParams = (item.dataset.params ? JSON.parse(item.dataset.params) : ''),
+		blockType = (item.dataset.params ? blockParams.className.split(' ')[0] : item.dataset.blockType),
 		blockData;
+	console.log('------------------');
+	console.log(blockParams);
 	console.log('------------------');
 
 	switch (blockType) {
 		case 'kassa-header':
-			blockData = {container:'div', type:'div', multiple:false, content:'###'};
+			blockData = {container:'div', type:'div', multiple:false, content:'###', title:'Header Кассы'};
 			break;
 		case 'title':
 			console.log('title');
-			blockData = {container:'div', helper:'input', type:'uploaderOrText', multiple:false, content:'Заголовок'};
+			blockData = {container:'div', helper:'input', type:'uploaderOrText', multiple:false, content:'Заголовок', title:'Заголовок'};
 			break;
 		case 'subtitle':
 			console.log('subtitle');
-			blockData = {container:'div', helper:'textarea', type:'uploaderOrText', multiple:false, content:'Подзаголовок'};
+			blockData = {container:'div', helper:'textarea', type:'uploaderOrText', multiple:false, content:'Подзаголовок', title:'Подзаголовок'};
 			break;
 		case 'upper-slider':
 			console.log('upper-slider');
-			blockData = {container:'div', helper:'input', type:'slider', multiple:true, content:'Верхний слайдер'};
+			blockData = {container:'div', helper:'input', type:'slider', multiple:true, content:'Верхний слайдер', title:'Верхний слайдер'};
 			break;
 		case 'description':
 			console.log('description');
@@ -152,30 +163,33 @@ function addElement(item, i) {
 				helper: 'textarea',
 				type:'richText',
 				multiple:false,
-				content:'Здесь должно быть описание. Описание может быть любой длины. Короткое или длинное. Здесь должно быть описание. Описание может быть любой длины. Короткое или длинное.'
+				content:'Здесь должно быть описание. Описание может быть любой длины. Короткое или длинное. Здесь должно быть описание. Описание может быть любой длины. Короткое или длинное.',
+				title:'Описание'
 			};
 			break;
 		case 'map':
 			console.log('map');
-			blockData = {container:'div', helper:'input', type:'sheduleMap', multiple:false, content:'Карта'}
+			blockData = {container:'div', helper:'input', type:'sheduleMap', multiple:false, content:'Карта', title:'Карта'}
 			break;
 		case 'bottom-slider':
 			console.log('bottom-slider');
-			blockData = {container:'div', helper:'input', type:'slider', multiple:true, content:'Нижний слайдер'};
+			blockData = {container:'div', helper:'input', type:'slider', multiple:true, content:'Нижний слайдер', title:'Нижний слайдер'};
 			break;
 		case 'kassa-footer':
 			console.log('kassa-footer');
-			blockData = {container:'div', type:'div', multiple:false, content:'###'};
+			blockData = {container:'div', type:'div', multiple:false, content:'###', title:'Footer Кассы'};
 			break;
 		default:
 			console.log('error');
-
 			blockData = blockData ? blockData : ''
-	}
+		}
+		if (item.dataset.params) {
+			blockData = {container:'div', type:'div', content:blockParams.text, styles:blockParams.styles, stylesInner:blockParams.stylesInner, title:blockData.title}
+		}
+
 	createBlock(blockType, item, blockData);
 	console.log('==================');
 }
-
 
 function appendOnClick() {
 	var sideItem = dc.querySelectorAll('.side_item');
@@ -183,6 +197,15 @@ function appendOnClick() {
 		item.addEventListener('click', function(){addElement(item,i)});
 	})
 }
+
+function checkExist() {
+	var
+		hidItem = dc.querySelectorAll('.hidden_item');
+	hidItem.forEach(function(item, i){
+		addElement(item,i);
+	})
+}
+
 
 function sortableMenu(dc, rootEl, contentBlock){
 		console.log(rootEl.children);
