@@ -3,6 +3,7 @@
 /subl*
 /views/static/content*
 /locales*
+/uploads*
 /public/build/js*
 /public/build/css*
 .DS_Store
