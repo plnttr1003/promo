@@ -66,7 +66,6 @@ function showEditor(dc, parentPlock, block, input, timestamp) {
 	}, false);
 }
 
-
 function allowResizeElement(el, className) {
 	if (el.classList) {
 		el.classList.toggle(className);

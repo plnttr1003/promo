@@ -12,15 +12,6 @@ exports.index = function(req, res) {
 
 exports.promo = function(req, res) {
 	var id = req.params.id;
-	var request = require('request'), cheerio = require('cheerio');
-	request({uri:'https://kassa.rambler.ru/', method:'GET', encoding:'binary'},
-		function (err, res, page) {
-				var $=cheerio.load(page);
-				var header=$('header section');
-				console.log(header.html());
-		});
-
-
 
 	Promo.findById(id).exec(function(err, promo) {
 		res.render('promo/promo.jade', {promo: promo});

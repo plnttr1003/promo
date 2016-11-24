@@ -10,20 +10,6 @@ var Promo = require('../../models/main.js').Promo;
 
 var __appdir = path.dirname(require.main.filename);
 
-// ------------------------
-// *** Handlers Block ***
-// ------------------------
-
-var checkNested = function (obj, layers) {
-
-	if (typeof layers == 'string') {layers = layers.split('.');}
-
-	for (var i = 0; i < layers.length; i++) {
-		if (!obj || !obj.hasOwnProperty(layers[i])) {return false;}
-		obj = obj[layers[i]];
-	}
-	return true;
-}
 
 // ------------------------
 // *** Admin promo Block ***

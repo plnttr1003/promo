@@ -27,6 +27,7 @@ function submitForm() {
 		form = dc.querySelectorAll('form')[0],
 		contentBlocksOnSubmit;
 	form.addEventListener('submit', function(event){
+		console.log(form);
 		event.preventDefault();
 		contentBlocksOnSubmit = dc.querySelectorAll('.content-block');
 		console.log(contentBlocksOnSubmit);
@@ -43,32 +44,12 @@ function submitForm() {
 	})
 }
 
-function dropzoneSettings(timestamp) {
-	console.log(timestamp);
-	var id = '_' + timestamp;
-	console.log(id);
-	console.log(Dropzone.options[id])
-	Dropzone.options[id] = {
-		paramName: "file",
-		maxFilesize: 2,
-		previewsContainer: '.content-block',
-		thumbnailWidth:'1200px',
-		accept: function(file, done) {
-			if (file.name == "justinbieber.jpg") {
-				done("Naha, you don't.");
-			}
-			else { done(); }
-		}
-	};
-}
-
 function createBlock(className, item, params) {
 
 	console.log('--=-=====----=');
 	console.log(className);
 	console.log(params);
 	console.log('--=-=====----=');
-
 
 	var
 		container = dc.querySelectorAll('.container')[0],
@@ -77,10 +58,10 @@ function createBlock(className, item, params) {
 		contentBlockInner = dc.createElement('div'),
 		contentBlockText = dc.createElement((params && params.container) ? params.container : 'div'),
 		contentBlockHelper = dc.createElement('input'),
+		contentBlockFileUploader = dc.createElement('input'),
 		sideElements = dc.querySelectorAll('.side_elements')[0],
 		timestamp = Date.now(),
-		newItem,
-		dropzoneBlock;
+		newItem;
 
 	newItem = item.cloneNode(true);
 	newItem.setAttributes({
@@ -105,6 +86,15 @@ function createBlock(className, item, params) {
 		'class': className + ' content-block-uploader '
 	})
 
+	contentBlockInner.appendChild(contentBlockFileUploader);
+
+	contentBlockFileUploader.setAttributes({
+		'type':'file',
+		'id':'____' + timestamp,
+		'multiple': ''
+	})
+
+
 	contentBlockText.textContent = ((params && params.content)) ? params.content : 'Содержание';
 	contentBlockText.setAttributes({
 		'data-type':((params && params.content)) ? params.type : '',
@@ -124,11 +114,9 @@ function createBlock(className, item, params) {
 	contentBlock.appendChild(contentBlockInner);
 	contentBlock.appendChild(contentBlockHelper);
 
-	dropzoneSettings(timestamp);
-	dropzoneBlock = new Dropzone('div#_'+timestamp+' .content-block-uploader', { url: '/file/post'});
-
 	sortableMenu(dc, sideElements, contentBlock);
 	showEditor(dc, contentBlock, contentBlockText, contentBlockHelper, timestamp);
+	uploadFiles(contentBlockFileUploader);
 }
 
 function addElement(item, i) {
@@ -207,7 +195,7 @@ function checkExist() {
 }
 
 
-function sortableMenu(dc, rootEl, contentBlock){
+function sortableMenu(dc, rootEl, contentBlock) {
 		console.log(rootEl.children);
 		var
 			dragEl;
@@ -245,6 +233,15 @@ function sortableMenu(dc, rootEl, contentBlock){
 
 				setTimeout(function(){dragEl.classList.add('ghost')}, 0)
 		}, false);
+}
+
+function uploadFiles(input) {
+	console.log(input);
+	input.addEventListener("change", handleFiles, false);
+		function handleFiles() {
+		//var fileList = this.files;
+		console.log(input.value);
+	}
 }
 
 (function ready(fn) {
