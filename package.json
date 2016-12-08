@@ -31,7 +31,10 @@
     "jshint-stylish": "^1.0.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node .",
+    "prestart": "npm run build",
+    "prebuild": "npm i",
+    "build": "gulp"
   },
   "repository": {
     "type": "git",
