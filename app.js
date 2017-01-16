@@ -1,5 +1,6 @@
+const mongoHost = 'mongo';
 var mongoose = require('mongoose');
-		mongoose.connect('localhost', 'main');
+		mongoose.connect(mongoHost, 'main');
 
 var express = require('express'),
 		bodyParser = require('body-parser'),
